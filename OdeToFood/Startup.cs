@@ -25,29 +25,11 @@ namespace OdeToFood
                               IGreeter greeter,
                               ILogger<Startup> logger)
         {
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
-
-            app.Use(next => // this function called only once by framework once ready to setup the pipeline
+            if (env.IsDevelopment())
             {
-                return async context => // this is the Middleware, which executes once for each HTTP Request that reaches this Mmiddleware
-                {
-                    logger.LogInformation("Request incoming");
-                    if (context.Request.Path.StartsWithSegments("/mym"))
-                    {
-                        await context.Response.WriteAsync("Hit!!");
-                        logger.LogInformation("Request Handled");
-                    }
-                    else
-                    {
-                        await next(context);
-                        logger.LogInformation("Response outgoing");
-                    }
-                };
-            });
-            
+                app.UseDeveloperExceptionPage();
+            }
+
             // This is a simple piece of 'Middleware' that will respond to every request by default
             app.UseWelcomePage(new WelcomePageOptions
             {
@@ -56,6 +38,7 @@ namespace OdeToFood
 
             app.Run(async (context) =>
             {
+                
                 var greeting = greeter.GetMessageOfTheDay();
                 await context.Response.WriteAsync(greeting);
             });
