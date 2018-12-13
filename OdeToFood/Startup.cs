@@ -30,13 +30,23 @@ namespace OdeToFood
             //    app.UseDeveloperExceptionPage();
             //}
 
-            app.Use(next =>
+            app.Use(next => // this function called only once by framework once ready to setup the pipeline
             {
-                return context =>
+                return async context => // this is the Middleware, which executes once for each HTTP Request that reaches this Mmiddleware
                 {
-
-                }
-            })
+                    logger.LogInformation("Request incoming");
+                    if (context.Request.Path.StartsWithSegments("/mym"))
+                    {
+                        await context.Response.WriteAsync("Hit!!");
+                        logger.LogInformation("Request Handled");
+                    }
+                    else
+                    {
+                        await next(context);
+                        logger.LogInformation("Response outgoing");
+                    }
+                };
+            });
             
             // This is a simple piece of 'Middleware' that will respond to every request by default
             app.UseWelcomePage(new WelcomePageOptions
