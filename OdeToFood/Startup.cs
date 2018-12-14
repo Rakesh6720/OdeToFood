@@ -17,6 +17,8 @@ namespace OdeToFood
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IGreeter, Greeter>();
+            // must make sure to register services required by MVC
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,11 +32,10 @@ namespace OdeToFood
                 app.UseDeveloperExceptionPage();
             }
 
-            // This is a simple piece of 'Middleware' that will respond to every request by default
-            app.UseWelcomePage(new WelcomePageOptions
-            {
-                Path = "/wp"
-            });
+            app.UseStaticFiles();
+
+            // this is the middleware required by MVC
+            app.UseMvcWithDefaultRoute();
 
             app.Run(async (context) =>
             {
