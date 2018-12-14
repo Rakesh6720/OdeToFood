@@ -16,13 +16,13 @@
                     <!-- asp-action is unique to .NET Core and requires the viewImports View, which comes as standard in an MVC template -->
                     <a asp-action="Details" asp-route-id="@restaurant.Id">More</a>
                     <!-- HTML helper methods are age-old ASP.NET tools that construct a link -->
-                    @Html.ActionLink("Go", "Details", new { id=restaurant.Id})
+                    @Html.ActionLink("Go", "Details", new { id = restaurant.Id })
                     <!-- you can also use the old school href way -->
                     <a href="/home/details/@restaurant.Id">Details</a>
                 </td>
             </tr>
         }
-
     </table>
+    <a asp-action="Create">Add Restaurant</a>
 </body>
 </html>

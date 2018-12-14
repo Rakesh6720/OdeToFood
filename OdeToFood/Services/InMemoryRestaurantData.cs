@@ -31,6 +31,16 @@ namespace OdeToFood.Services
             return _restaurants.FirstOrDefault(r => r.Id == id);
         }
 
+        public Restaurant Add(Restaurant restaurant)
+        {
+            // normally a DB will autoincrement the ID property, but here we'll just add 1 using the Max method
+            restaurant.Id = _restaurants.Max(r => r.Id) + 1;
+            // Add the new restaurant to your list of restaurants
+            _restaurants.Add(restaurant);
+            // Create method on HomeController is expecting a return of a restaurant
+            return restaurant;
+        }
+
         // Scott's convention is to see private fields declared at the bottom of the class definition
         List<Restaurant> _restaurants;
     }

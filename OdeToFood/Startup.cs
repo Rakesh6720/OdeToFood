@@ -21,7 +21,7 @@ namespace OdeToFood
             // register your home-made services
             services.AddSingleton<IGreeter, Greeter>();
             // typicall you want AddScroped for a data access component
-            services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
+            services.AddSingleton<IRestaurantData, InMemoryRestaurantData>();
             // must make sure to register services required by MVC
             services.AddMvc();
         }
