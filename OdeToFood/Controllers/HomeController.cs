@@ -10,7 +10,7 @@ namespace OdeToFood.Controllers
 
             var model = new Restaurant { Id = 1, Name = "Scott's Pizza Place" };
 
-            return new ObjectResult(model);
+            return View();
         }
     }
 }
