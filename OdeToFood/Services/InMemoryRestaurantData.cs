@@ -26,6 +26,11 @@ namespace OdeToFood.Services
             return _restaurants.OrderBy(r => r.Name);
         }
 
+        public Restaurant Get(int id)
+        {
+            return _restaurants.FirstOrDefault(r => r.Id == id);
+        }
+
         // Scott's convention is to see private fields declared at the bottom of the class definition
         List<Restaurant> _restaurants;
     }
