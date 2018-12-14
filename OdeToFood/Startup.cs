@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OdeToFood.Services;
 
 namespace OdeToFood
 {
@@ -17,7 +18,10 @@ namespace OdeToFood
         // This method registers services that ASP .NET Core can inject into other components
         public void ConfigureServices(IServiceCollection services)
         {
+            // register your home-made services
             services.AddSingleton<IGreeter, Greeter>();
+            // typicall you want AddScroped for a data access component
+            services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
             // must make sure to register services required by MVC
             services.AddMvc();
         }
