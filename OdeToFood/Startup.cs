@@ -6,22 +6,32 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OdeToFood.Data;
 using OdeToFood.Services;
 
 namespace OdeToFood
 {
     public class Startup
     {
+        private IConfiguration _configuration;
+
+        public Startup(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         // This method registers services that ASP .NET Core can inject into other components
         public void ConfigureServices(IServiceCollection services)
         {
             // register your home-made services
             services.AddSingleton<IGreeter, Greeter>();
+            services.AddDbContext < OdeToFoodDbContext >(
+                options => options.UseSqlServer(_configuration.GetConnectionString("OdeToFood")));
             // typicall you want AddScroped for a data access component
-            services.AddSingleton<IRestaurantData, InMemoryRestaurantData>();
+            services.AddScoped<IRestaurantData, SqlRestaurantData>();
             // must make sure to register services required by MVC
             services.AddMvc();
         }
