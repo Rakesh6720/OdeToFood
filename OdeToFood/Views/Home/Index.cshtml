@@ -1,28 +1,30 @@
 ﻿@model OdeToFood.ViewModels.HomeIndexViewModel
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-</head>
-<body>
+@{
+    ViewBag.Title = "Home Page";
+
+}
+
+<h1>All Restaurants</h1>
+<table>
+    @foreach (var restaurant in Model.Restaurants)
+    {
+        <tr>
+            <td>@restaurant.Id</td>
+            <td>@restaurant.Name</td>
+            <td>
+                <!-- asp-action is unique to .NET Core and requires the viewImports View, which comes as standard in an MVC template -->
+                <a asp-action="Details" asp-route-id="@restaurant.Id">More</a>
+                <!-- HTML helper methods are age-old ASP.NET tools that construct a link -->
+                @Html.ActionLink("Go", "Details", new { id = restaurant.Id })
+                <!-- you can also use the old school href way -->
+                <a href="/home/details/@restaurant.Id">Details</a>
+            </td>
+        </tr>
+    }
+</table>
+<a asp-action="Create">Add Restaurant</a>
+
+@section footer {
     <h1>@Model.CurrentMessage</h1>
-    <table>
-        @foreach (var restaurant in Model.Restaurants)
-        {
-            <tr>
-                <td>@restaurant.Id</td>
-                <td>@restaurant.Name</td>
-                <td>
-                    <!-- asp-action is unique to .NET Core and requires the viewImports View, which comes as standard in an MVC template -->
-                    <a asp-action="Details" asp-route-id="@restaurant.Id">More</a>
-                    <!-- HTML helper methods are age-old ASP.NET tools that construct a link -->
-                    @Html.ActionLink("Go", "Details", new { id = restaurant.Id })
-                    <!-- you can also use the old school href way -->
-                    <a href="/home/details/@restaurant.Id">Details</a>
-                </td>
-            </tr>
-        }
-    </table>
-    <a asp-action="Create">Add Restaurant</a>
-</body>
-</html>
+}
